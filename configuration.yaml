@@ -1,0 +1,60 @@
+rest:
+  - resource: https://www.naldo.de/_assets/012ccdbd1331184d82aa9387f0ed2f73/efa/XML_DM_REQUEST?calcOneDirection=1&canChangeMOT=0&coordOutputFormat=WGS84%5Bdd.ddddd%5D&deleteAssignedStops_dm=1&depSequence=10&depType=stopEvents&doNotSearchForStops=1&genMaps=0&itOptionsActive=1&itdDateTimeDepArr=dep&language=de&locationServerActive=1&maxTimeLoop=1&mergeDep=1&mode=direct&name_dm=de%3A08415%3A29000&outputFormat=rapidJSON&ptOptionsActive=1&sl3plusDMMacro=1&type_dm=any&useAllStops=0&useProxFootSearch=0&useRealtime=1&version=10.5.17.3
+    scan_interval: 60
+    sensor: 
+      - name: "Naldo Rohdaten Abfahrt Ahlsberg"
+        unique_id: naldo_raw_departures_ahlsberg
+        value_template: "OK"
+        json_attributes:
+          - stopEvents
+  - resource: https://www.naldo.de/_assets/012ccdbd1331184d82aa9387f0ed2f73/efa/XML_DM_REQUEST?calcOneDirection=1&canChangeMOT=0&coordOutputFormat=WGS84%5Bdd.ddddd%5D&deleteAssignedStops_dm=1&depSequence=10&depType=stopEvents&doNotSearchForStops=1&genMaps=0&itOptionsActive=1&itdDateTimeDepArr=arr&language=de&locationServerActive=1&maxTimeLoop=1&mergeDep=1&mode=direct&name_dm=de%3A08415%3A29000&outputFormat=rapidJSON&ptOptionsActive=1&sl3plusDMMacro=1&type_dm=any&useAllStops=0&useProxFootSearch=0&useRealtime=1&version=10.5.17.3
+    scan_interval: 60
+    sensor: 
+      - name: "Naldo Rohdaten Ankunft Ahlsberg"
+        unique_id: naldo_raw_arrivals_ahlsberg
+        value_template: "OK"
+        json_attributes:
+          - stopEvents
+  - resource: https://www.naldo.de/_assets/012ccdbd1331184d82aa9387f0ed2f73/efa/XML_DM_REQUEST?calcOneDirection=1&canChangeMOT=0&coordOutputFormat=WGS84%5Bdd.ddddd%5D&deleteAssignedStops_dm=1&depSequence=10&depType=stopEvents&doNotSearchForStops=1&genMaps=0&itOptionsActive=1&itdDateTimeDepArr=dep&language=de&locationServerActive=1&maxTimeLoop=1&mergeDep=1&mode=direct&name_dm=de%3A08415%3A29010&outputFormat=rapidJSON&ptOptionsActive=1&sl3plusDMMacro=1&type_dm=any&useAllStops=0&useProxFootSearch=0&useRealtime=1&version=10.5.17.3
+    scan_interval: 60
+    sensor: 
+      - name: "Naldo Rohdaten Abfahrt Laiblinsplatz"
+        unique_id: naldo_raw_departures_laiblinsplatz
+        value_template: "OK"
+        json_attributes:
+          - stopEvents
+
+template:
+  - sensor:
+      - name: "Naldo Abfahrt Ahlsberg"
+        unique_id: naldo_abfahrt_ahlsberg
+        state: >
+          {% from 'naldo_formatter.jinja' import format_naldo_departure_response_for_state %}
+          {{ format_naldo_departure_response_for_state(state_attr('sensor.naldo_rohdaten_abfahrt_ahlsberg', 'stopEvents')) }}
+        unit_of_measurement: "min"
+        attributes:
+          departures: >
+            {% from 'naldo_formatter.jinja' import format_naldo_departure_response_for_departures_ui %}
+            {{ format_naldo_departure_response_for_departures_ui(state_attr('sensor.naldo_rohdaten_abfahrt_ahlsberg', 'stopEvents')) }}
+  - sensor:
+      - name: "Naldo Ankunft Ahlsberg"
+        unique_id: naldo_ankunft_ahlsberg
+        state: >
+          {% from 'naldo_formatter.jinja' import format_naldo_arrival_response_for_state %}
+          {{ format_naldo_arrival_response_for_state(state_attr('sensor.naldo_rohdaten_ankunft_ahlsberg', 'stopEvents')) }}
+        unit_of_measurement: "min"
+        attributes:
+          departures: >
+            {% from 'naldo_formatter.jinja' import format_naldo_arrival_response_for_departures_ui %}
+            {{ format_naldo_arrival_response_for_departures_ui(state_attr('sensor.naldo_rohdaten_ankunft_ahlsberg', 'stopEvents')) }}
+  - sensor:
+      - name: "Naldo Abfahrt Laiblinsplatz"
+        unique_id: naldo_abfahrt_laiblinsplatz
+        state: >
+          {% from 'naldo_formatter.jinja' import format_naldo_departure_response_for_state %}
+          {{ format_naldo_departure_response_for_state(state_attr('sensor.naldo_rohdaten_abfahrt_laiblinsplatz', 'stopEvents')) }}
+        unit_of_measurement: "min"
+        attributes:
+          departures: >
+            {% from 'naldo_formatter.jinja' import format_naldo_departure_response_for_departures_ui %}
+            {{ format_naldo_departure_response_for_departures_ui(state_attr('sensor.naldo_rohdaten_abfahrt_laiblinsplatz', 'stopEvents')) }}
