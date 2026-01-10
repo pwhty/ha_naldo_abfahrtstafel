@@ -27,13 +27,21 @@ Die Lösung besteht aus:
 ## 🧩 Architektur-Überblick
 
 NALDO EFA API
+
 ↓
+
 REST Sensor (Rohdaten)
+
 ↓
+
 Template Sensor
+
 ↓
+
 Jinja Formatter (Macros)
+
 ↓
+
 Lovelace UI (Abfahrtstafel)
 
 ---
