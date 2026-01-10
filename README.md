@@ -1,4 +1,4 @@
-# ha_naldo_abfahrtstafel
+# ha-naldo-abfahrtstafel
 
 Home-Assistant-Konfiguration zur Darstellung einer **NALDO-Abfahrts- und Ankunftstafel** (ÖPNV) auf Basis der öffentlichen EFA-Schnittstelle von naldo.de.
 
